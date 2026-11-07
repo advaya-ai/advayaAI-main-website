@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advaya AI | Production-Grade AI Systems for Local Businesses</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            50: '#F8FAFC',
+                            100: '#F1F5F9',
+                            200: '#E2E8F0',
+                            300: '#CBD5E1',
+                            400: '#94A3B8',
+                            500: '#64748B',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1E293B',
+                            900: '#0F172A',
+                            950: '#020617',
+                        },
+                        brand: {
+                            blue: '#2563EB',
+                            blueDark: '#1D4ED8',
+                            navy: '#0F172A',
+                            emerald: '#059669',
+                            emeraldLight: '#ECFDF5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FFFFFF;
+            color: #0F172A;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .clean-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .clean-card-hover:hover {
+            border-color: #CBD5E1;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .subtle-grid-bg {
+            background-size: 32px 32px;
+            background-image: linear-gradient(to right, rgba(226, 232, 240, 0.5) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(226, 232, 240, 0.5) 1px, transparent 1px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F8FAFC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        .call-pulse {
+            animation: pulseRing 2s infinite;
+        }
+        @keyframes pulseRing {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+    </style>
+</head>
+<body class="selection:bg-brand-blue selection:text-white">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-4 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+                    <i class="fa-solid fa-layer-group text-sm"></i>
+                </div>
+                <div>
+                    <span class="text-lg font-bold tracking-tight text-slate-900">Advaya<span class="text-brand-blue">.ai</span></span>
+                    <span class="block text-[10px] uppercase font-semibold text-slate-500 tracking-wider -mt-1">Systems Engineering</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <a href="#solutions" class="hover:text-slate-900 transition-colors">Solutions</a>
+                <a href="#differentiator" class="hover:text-slate-900 transition-colors">Engineering Standard</a>
+                <a href="#simulator" class="hover:text-slate-900 transition-colors">Live Demo</a>
+                <a href="#roi-calculator" class="hover:text-slate-900 transition-colors">ROI Calculator</a>
+                <a href="#case-studies" class="hover:text-slate-900 transition-colors">Case Studies</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="flex items-center gap-4">
+                <button onclick="openBookingModal()" class="hidden sm:inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold transition-all shadow-sm">
+                    Book Architecture Call
+                </button>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 hover:text-slate-900 p-2">
+                    <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-5 space-y-4">
+            <a href="#solutions" onclick="toggleMobileMenu()" class="block text-slate-600 hover:text-slate-900 font-medium text-sm">Solutions</a>
+            <a href="#differentiator" onclick="toggleMobileMenu()" class="block text-slate-600 hover:text-slate-900 font-medium text-sm">Engineering Standard</a>
+            <a href="#simulator" onclick="toggleMobileMenu()" class="block text-slate-600 hover:text-slate-900 font-medium text-sm">Live Demo</a>
+            <a href="#roi-calculator" onclick="toggleMobileMenu()" class="block text-slate-600 hover:text-slate-900 font-medium text-sm">ROI Calculator</a>
+            <a href="#case-studies" onclick="toggleMobileMenu()" class="block text-slate-600 hover:text-slate-900 font-medium text-sm">Case Studies</a>
+            <button onclick="toggleMobileMenu(); openBookingModal();" class="w-full py-2.5 rounded-lg bg-slate-900 text-white font-semibold text-sm">
+                Book Architecture Call
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-16 pb-20 md:pt-24 md:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto subtle-grid-bg">
+        <div class="text-center max-w-4xl mx-auto">
+            
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold tracking-wide mb-6">
+                <span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
+                <span>ENGINEERED FOR LOCAL SERVICES & TRADES</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+                Never Miss a Lead Again. <br class="hidden sm:inline">
+                <span class="text-brand-blue">Production-Grade AI Systems</span> for Local Business.
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="mt-6 text-lg sm:text-xl text-slate-600 font-normal leading-relaxed max-w-3xl mx-auto">
+                We build custom Voice Receptionists, WhatsApp Booking Bots, and Reputation Engine systems backed by <strong class="text-slate-900 font-semibold">8+ years of cloud engineering experience</strong>—not fragile no-code wrappers.
+            </p>
+
+            <!-- CTAs -->
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="openBookingModal()" class="w-full sm:w-auto px-7 py-3.5 rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white font-semibold text-sm shadow-sm transition-all flex items-center justify-center gap-2">
+                    Schedule 15-Min Demo <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+                <a href="#roi-calculator" class="w-full sm:w-auto px-7 py-3.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-sm transition-all flex items-center justify-center gap-2">
+                    Calculate Saved Revenue <i class="fa-solid fa-calculator text-slate-400 text-xs"></i>
+                </a>
+            </div>
+
+            <!-- Key Trust Badges -->
+            <div class="mt-14 pt-8 border-t border-slate-200/80 grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
+                <div class="flex items-start gap-3">
+                    <div class="text-brand-blue text-lg mt-0.5"><i class="fa-solid fa-shield-check"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-900">99.9% System Uptime</h4>
+                        <p class="text-xs text-slate-500">Multi-cloud fault-tolerant architecture.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="text-brand-blue text-lg mt-0.5"><i class="fa-solid fa-bolt"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-900">&lt; 300ms Latency</h4>
+                        <p class="text-xs text-slate-500">Natural voice conversation flow.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="text-brand-blue text-lg mt-0.5"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-900">Direct Calendar Sync</h4>
+                        <p class="text-xs text-slate-500">Google Calendar, Dentrix, HighLevel.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="text-brand-blue text-lg mt-0.5"><i class="fa-solid fa-code-commit"></i></div>
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-900">Deterministic Rules</h4>
+                        <p class="text-xs text-slate-500">Zero double-booking or price hallucinations.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- DIFFERENTIATION SECTION ("Anti-Vibe Coding") -->
+    <section id="differentiator" class="py-20 bg-slate-50 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="max-w-3xl mb-14">
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-blue">Systems Engineering vs. No-Code Wrappers</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">The Anti-Vibe Coding Standard</h2>
+                <p class="mt-3 text-slate-600 text-base leading-relaxed">
+                    Most newly formed "AI agencies" string together fragile drag-and-drop Zapier scripts that fail when a customer stammers or asks a custom question. We build enterprise-grade, deterministic AI pipelines backed by 8+ years of live IT infrastructure experience.
+                </p>
+            </div>
+
+            <!-- Side-by-side Matrix -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Wrapper Agencies -->
+                <div class="clean-card rounded-2xl p-6 sm:p-8 border-l-4 border-l-red-500 bg-white">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-sm">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900">Fragile Wrapper Agencies</h3>
+                    </div>
+
+                    <ul class="space-y-4 text-sm text-slate-600">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-xmark text-red-500 mt-1 shrink-0"></i>
+                            <span><strong>Unfiltered AI Hallucinations:</strong> Quotes wrong service prices and double-books calendar slots.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-xmark text-red-500 mt-1 shrink-0"></i>
+                            <span><strong>Single-Point Outages:</strong> Rely on simple no-code tools that break during high call volume.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-xmark text-red-500 mt-1 shrink-0"></i>
+                            <span><strong>No Fallbacks:</strong> Calls drop or freeze when callers interrupt or speak with an accent.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-xmark text-red-500 mt-1 shrink-0"></i>
+                            <span><strong>Zero Telemetry:</strong> No audit logs or phone call monitoring to verify missed leads.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Advaya AI Standard -->
+                <div class="clean-card rounded-2xl p-6 sm:p-8 border-l-4 border-l-brand-emerald bg-white shadow-md">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-emeraldLight text-brand-emerald flex items-center justify-center font-bold text-sm">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">The Advaya AI Blueprint</h3>
+                        </div>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-brand-emerald bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200">Production Ready</span>
+                    </div>
+
+                    <ul class="space-y-4 text-sm text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-brand-emerald mt-1 shrink-0"></i>
+                            <span><strong>Strict State Guardrails:</strong> Deterministic logic guarantees 100% accurate appointment availability and rates.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-brand-emerald mt-1 shrink-0"></i>
+                            <span><strong>Fault-Tolerant Infrastructure:</strong> Redundant server nodes ensure 24/7 reliability for emergency calls.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-brand-emerald mt-1 shrink-0"></i>
+                            <span><strong>Sub-300ms Conversational Flow:</strong> Natural voice orchestration with human-in-the-loop escalation.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-check text-brand-emerald mt-1 shrink-0"></i>
+                            <span><strong>Full Telemetry & CRM Sync:</strong> Real-time call logging into HighLevel, Dentrix, or custom software.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTIONS SHOWCASE (FILTERABLE TABBED) -->
+    <section id="solutions" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-blue">Tailored Solutions</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">Built Specifically for Your Local Industry</h2>
+            <p class="mt-3 text-slate-600 text-base">Select your industry below to review how our AI agents automate customer acquisition and operations.</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
+            <button onclick="filterIndustry('all')" id="filter-all" class="ind-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-slate-900 text-white shadow-sm">All Industries</button>
+            <button onclick="filterIndustry('dental')" id="filter-dental" class="ind-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">Dental Clinics</button>
+            <button onclick="filterIndustry('fitness')" id="filter-fitness" class="ind-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">Fitness Coaches</button>
+            <button onclick="filterIndustry('trades')" id="filter-trades" class="ind-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">Plumbing & Trades</button>
+            <button onclick="filterIndustry('services')" id="filter-services" class="ind-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">Local Services</button>
+        </div>
+
+        <!-- Industry Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Dental Card -->
+            <div class="ind-card clean-card clean-card-hover rounded-2xl p-6 sm:p-8 flex flex-col justify-between" data-category="dental">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 text-brand-blue flex items-center justify-center text-xl mb-5">
+                        <i class="fa-solid fa-tooth"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-brand-blue uppercase tracking-wider">Dental Clinics & Medical</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">AI Front-Desk & Patient Scheduler</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        Answering patient calls 24/7, triaging toothache emergencies, verifying basic insurance, and filling empty chair slots directly in your schedule.
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span><i class="fa-solid fa-check text-brand-emerald mr-1"></i> Dentrix & Calendar Sync</span>
+                    <button onclick="openBookingModal()" class="text-brand-blue font-semibold hover:underline">View Blueprint &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Fitness Card -->
+            <div class="ind-card clean-card clean-card-hover rounded-2xl p-6 sm:p-8 flex flex-col justify-between" data-category="fitness">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 text-brand-emerald flex items-center justify-center text-xl mb-5">
+                        <i class="fa-solid fa-dumbbell"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-brand-emerald uppercase tracking-wider">Fitness & Wellness</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">WhatsApp Lead Qualifier & Onboarding Agent</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        Engages Meta/Instagram ad leads over WhatsApp within 10 seconds. Qualifies health goals, sends program details, and locks in consultation calls.
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span><i class="fa-solid fa-check text-brand-emerald mr-1"></i> Meta API & Payment Links</span>
+                    <button onclick="openBookingModal()" class="text-brand-blue font-semibold hover:underline">View Blueprint &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Trades Card -->
+            <div class="ind-card clean-card clean-card-hover rounded-2xl p-6 sm:p-8 flex flex-col justify-between" data-category="trades">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center text-xl mb-5">
+                        <i class="fa-solid fa-wrench"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-amber-600 uppercase tracking-wider">Plumbing, HVAC & Electrical</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">24/7 Emergency Dispatch & Job Quote Agent</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        Captures high-ticket after-hours emergency calls while technicians are in the field. Collects job site photos via SMS and dispatches on-call staff.
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span><i class="fa-solid fa-check text-brand-emerald mr-1"></i> ServiceTitan & Jobber Ready</span>
+                    <button onclick="openBookingModal()" class="text-brand-blue font-semibold hover:underline">View Blueprint &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Local Services Card -->
+            <div class="ind-card clean-card clean-card-hover rounded-2xl p-6 sm:p-8 flex flex-col justify-between" data-category="services">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 border border-purple-100 text-purple-600 flex items-center justify-center text-xl mb-5">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <span class="text-xs font-semibold text-purple-600 uppercase tracking-wider">Local Business & Salons</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">Google Review Growth & Reputation Guardian</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                        Automates review requests post-service. Boosts your Google Maps ranking by driving 5-star reviews while intercepting unhappy feedback privately.
+                    </p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span><i class="fa-solid fa-check text-brand-emerald mr-1"></i> Google Business API Integrated</span>
+                    <button onclick="openBookingModal()" class="text-brand-blue font-semibold hover:underline">View Blueprint &rarr;</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LIVE INTERACTIVE AGENT SIMULATOR -->
+    <section id="simulator" class="py-20 bg-slate-900 text-white border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-blue">Interactive Test Bench</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Test Our Agents Live</h2>
+                <p class="mt-3 text-slate-400 text-base">Select an agent environment below to simulate real-world customer conversations.</p>
+            </div>
+
+            <!-- Simulator Container -->
+            <div class="max-w-4xl mx-auto bg-slate-950 rounded-2xl border border-slate-800 p-4 sm:p-8 shadow-2xl">
+                
+                <!-- Toggle Mode Bar -->
+                <div class="flex items-center justify-center gap-3 mb-8 p-1.5 bg-slate-900 rounded-xl border border-slate-800 max-w-md mx-auto">
+                    <button onclick="switchSim('voice')" id="sim-btn-voice" class="flex-1 py-2.5 px-4 rounded-lg text-xs font-semibold transition-all bg-brand-blue text-white shadow-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-phone"></i> Voice Call Simulator
+                    </button>
+                    <button onclick="switchSim('whatsapp')" id="sim-btn-whatsapp" class="flex-1 py-2.5 px-4 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-white flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-emerald-400"></i> WhatsApp Bot
+                    </button>
+                </div>
+
+                <!-- SIMULATOR VIEW 1: VOICE PHONE CALL -->
+                <div id="sim-voice-view" class="space-y-6">
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand-blue/20 text-brand-blue flex items-center justify-center call-pulse">
+                                <i class="fa-solid fa-phone-flip text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Apex Dental Clinic - AI Voice Line</h4>
+                                <p class="text-xs text-emerald-400 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Active Line (300ms latency)</p>
+                            </div>
+                        </div>
+                        <button onclick="playNextVoiceStep()" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-colors">
+                            <i class="fa-solid fa-play text-xs text-brand-blue mr-1"></i> Trigger Next Reply
+                        </button>
+                    </div>
+
+                    <!-- Voice Call Transcript Log -->
+                    <div id="voice-transcript" class="space-y-3 font-mono text-xs sm:text-sm bg-slate-900 p-4 sm:p-6 rounded-xl border border-slate-800 max-h-64 overflow-y-auto">
+                        <div class="p-3 rounded-lg bg-slate-800 text-slate-200">
+                            <strong class="text-brand-blue">AI Agent (0.1s):</strong> "Hello! Thanks for calling Apex Dental Care. This is Sarah, the digital receptionist. Are you looking to schedule a cleaning or calling about an emergency?"
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIMULATOR VIEW 2: WHATSAPP BOT -->
+                <div id="sim-whatsapp-view" class="hidden space-y-6">
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                                <i class="fa-brands fa-whatsapp text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">IronPulse Fitness - WhatsApp Assistant</h4>
+                                <p class="text-xs text-slate-400">Automated Meta Ad Lead Qualifier</p>
+                            </div>
+                        </div>
+                        <button onclick="sendWaMessage()" class="px-3 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white transition-colors">
+                            Simulate Customer Reply <i class="fa-solid fa-paper-plane text-xs ml-1"></i>
+                        </button>
+                    </div>
+
+                    <!-- WhatsApp Chat Area -->
+                    <div id="wa-chat-box" class="space-y-3 font-sans text-xs sm:text-sm bg-slate-900 p-4 sm:p-6 rounded-xl border border-slate-800 max-h-64 overflow-y-auto">
+                        <div class="flex gap-2 max-w-[85%]">
+                            <div class="p-3 rounded-2xl rounded-tl-none bg-slate-800 text-slate-200 border border-slate-700">
+                                👋 Hey there! Thanks for clicking our Instagram ad. Coach Marcus saw you were interested in the 12-Week Transformation. What's your top goal right now?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Bar -->
+                <div class="mt-6 pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+                    <span>Want to test our voice agent on your actual phone number?</span>
+                    <button onclick="openBookingModal()" class="px-4 py-2 rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white font-semibold text-xs transition-colors">
+                        Request Live Phone Call Demo &rarr;
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- LOST REVENUE & ROI CALCULATOR -->
+    <section id="roi-calculator" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-14">
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-blue">Revenue Leakage Audit</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">How Much Revenue Are Missed Calls Costing You?</h2>
+            <p class="mt-3 text-slate-600 text-base">Adjust the sliders below to calculate your estimated annual revenue lost to delayed responses.</p>
+        </div>
+
+        <div class="clean-card rounded-2xl p-6 sm:p-10 max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white shadow-md">
+            
+            <!-- Sliders Column -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Slider 1: Monthly Inquiries -->
+                <div>
+                    <div class="flex justify-between items-center text-sm font-semibold text-slate-800 mb-2">
+                        <label>Monthly Inquiries / Calls:</label>
+                        <span id="calc-leads-val" class="text-brand-blue font-bold text-base">120 leads</span>
+                    </div>
+                    <input type="range" id="calc-leads" min="20" max="500" value="120" step="10" oninput="runCalculator()" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-blue">
+                </div>
+
+                <!-- Slider 2: Missed Rate % -->
+                <div>
+                    <div class="flex justify-between items-center text-sm font-semibold text-slate-800 mb-2">
+                        <label>Estimated Missed / Delayed Calls (%):</label>
+                        <span id="calc-missed-val" class="text-amber-600 font-bold text-base">20%</span>
+                    </div>
+                    <input type="range" id="calc-missed" min="5" max="50" value="20" step="1" oninput="runCalculator()" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                </div>
+
+                <!-- Slider 3: Ticket Value -->
+                <div>
+                    <div class="flex justify-between items-center text-sm font-semibold text-slate-800 mb-2">
+                        <label>Average Customer / Job Value ($):</label>
+                        <span id="calc-value-val" class="text-brand-emerald font-bold text-base">$450</span>
+                    </div>
+                    <input type="range" id="calc-value" min="100" max="3000" value="450" step="50" oninput="runCalculator()" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-emerald">
+                </div>
+
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-500 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-brand-blue"></i>
+                    <span>Calculates recovered revenue based on a conservative 25% AI instant conversion rate.</span>
+                </div>
+            </div>
+
+            <!-- Revenue Box -->
+            <div class="lg:col-span-5 bg-slate-900 rounded-xl p-6 text-center text-white space-y-4 shadow-xl">
+                <span class="text-xs font-semibold uppercase tracking-widest text-slate-400">Estimated Annual Recovered Revenue</span>
+                <div id="calc-annual-result" class="text-4xl font-extrabold text-brand-blue">
+                    $32,400
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Instantly answering after-hours calls & WhatsApp inquiries turns leaked leads into booked clients.
+                </p>
+                <button onclick="openBookingModal()" class="w-full py-3 rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white font-semibold text-sm transition-colors shadow-sm">
+                    Stop Revenue Leakage &rarr;
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CASE STUDIES / PROOF -->
+    <section id="case-studies" class="py-20 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-blue">Measured Results</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">Real Business Impact</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="clean-card rounded-2xl p-6 bg-white">
+                    <div class="text-3xl font-extrabold text-slate-900 mb-1">+42%</div>
+                    <div class="text-xs font-bold text-brand-blue uppercase tracking-wider mb-3">After-Hours Appointments</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        "Advaya's AI voice receptionist captures late-night emergency dental calls when our front desk is closed. It paid for itself in week one."
+                    </p>
+                    <div class="pt-3 border-t border-slate-100 text-xs font-semibold text-slate-800">
+                        Dr. Aris Thorne — <span class="text-slate-500 font-normal">Apex Dental Group</span>
+                    </div>
+                </div>
+
+                <div class="clean-card rounded-2xl p-6 bg-white">
+                    <div class="text-3xl font-extrabold text-slate-900 mb-1">&lt; 15 Sec</div>
+                    <div class="text-xs font-bold text-brand-emerald uppercase tracking-wider mb-3">Lead Response Time</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        "Our WhatsApp lead conversion jumped by 3x. Instagram ad leads receive instant personalized answers and workout consult bookings."
+                    </p>
+                    <div class="pt-3 border-t border-slate-100 text-xs font-semibold text-slate-800">
+                        Marcus Vance — <span class="text-slate-500 font-normal">IronPulse Fitness</span>
+                    </div>
+                </div>
+
+                <div class="clean-card rounded-2xl p-6 bg-white">
+                    <div class="text-3xl font-extrabold text-slate-900 mb-1">118 Reviews</div>
+                    <div class="text-xs font-bold text-purple-600 uppercase tracking-wider mb-3">Added in 90 Days</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        "The review engine automatically collects 5-star Google ratings right after our plumbing technicians complete a job."
+                    </p>
+                    <div class="pt-3 border-t border-slate-100 text-xs font-semibold text-slate-800">
+                        Dave Miller — <span class="text-slate-500 font-normal">ProLine Trades</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER CTA BANNER -->
+    <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="rounded-3xl bg-slate-900 p-8 sm:p-14 text-center text-white relative overflow-hidden shadow-2xl">
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight max-w-3xl mx-auto leading-tight">
+                Ready for Reliable AI Architecture in Your Business?
+            </h2>
+            <p class="mt-4 text-slate-400 text-base max-w-2xl mx-auto">
+                Book a 15-minute call directly with our systems engineering team. We'll audit your lead workflow and build a custom deployment roadmap.
+            </p>
+            <div class="mt-8 flex justify-center">
+                <button onclick="openBookingModal()" class="px-8 py-4 rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white font-semibold text-base transition-colors shadow-sm">
+                    Book Your Architecture Call &rarr;
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-xs">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 rounded bg-slate-900 flex items-center justify-center text-white font-bold text-xs">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <span class="text-sm font-bold text-slate-900">Advaya AI Studio</span>
+            </div>
+            
+            <p>© 2026 Advaya AI. High-Reliability Systems Engineering for Service Businesses.</p>
+
+            <div class="flex gap-6 font-medium text-slate-600">
+                <a href="#solutions" class="hover:text-slate-900">Solutions</a>
+                <a href="#differentiator" class="hover:text-slate-900">Engineering</a>
+                <a href="#roi-calculator" class="hover:text-slate-900">ROI Calculator</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE BOOKING MODAL -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="clean-card bg-white rounded-2xl border border-slate-200 w-full max-w-lg p-6 sm:p-8 relative shadow-2xl">
+            
+            <!-- Close Button -->
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900 text-lg w-8 h-8 rounded-full flex items-center justify-center bg-slate-100">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="mb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-blue">Direct Engineering Consult</span>
+                <h3 class="text-2xl font-extrabold text-slate-900 mt-1">Book an Architecture Call</h3>
+                <p class="text-xs text-slate-500 mt-1">Select a time slot and share your primary business goal.</p>
+            </div>
+
+            <!-- Booking Form -->
+            <form onsubmit="handleBookingSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Your Full Name</label>
+                    <input type="text" required placeholder="Dr. Sarah Vance" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-brand-blue">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Phone Number</label>
+                        <input type="tel" required placeholder="+1 (555) 000-0000" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-brand-blue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Industry</label>
+                        <select class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-800 text-sm focus:outline-none focus:border-brand-blue">
+                            <option>Dental Clinic</option>
+                            <option>Fitness Coach / Gym</option>
+                            <option>Plumbing / Trades</option>
+                            <option>Other Service Business</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-2">Preferred Demo Slot</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <label class="border border-slate-200 rounded-lg p-2 text-center text-xs font-medium cursor-pointer hover:border-brand-blue hover:bg-blue-50 transition-colors">
+                            <input type="radio" name="slot" class="hidden" checked>
+                            Today 2:00 PM
+                        </label>
+                        <label class="border border-slate-200 rounded-lg p-2 text-center text-xs font-medium cursor-pointer hover:border-brand-blue hover:bg-blue-50 transition-colors">
+                            <input type="radio" name="slot" class="hidden">
+                            Tomorrow 10:30 AM
+                        </label>
+                        <label class="border border-slate-200 rounded-lg p-2 text-center text-xs font-medium cursor-pointer hover:border-brand-blue hover:bg-blue-50 transition-colors">
+                            <input type="radio" name="slot" class="hidden">
+                            Tomorrow 3:30 PM
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-lg bg-brand-blue hover:bg-brand-blueDark text-white font-semibold text-sm transition-colors shadow-sm mt-2">
+                    Confirm Call Reservation &rarr;
+                </button>
+            </form>
+
+            <p class="text-[10px] text-slate-400 text-center mt-4">
+                🔒 Protected by Enterprise Systems Privacy Guard. No spam.
+            </p>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Industry Filter Logic
+        function filterIndustry(cat) {
+            const cards = document.querySelectorAll('.ind-card');
+            const btns = document.querySelectorAll('.ind-filter-btn');
+
+            // Reset buttons
+            btns.forEach(b => b.className = 'ind-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200');
+            
+            // Highlight active button
+            const activeBtn = document.getElementById(`filter-${cat}`);
+            if (activeBtn) activeBtn.className = 'ind-filter-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-slate-900 text-white shadow-sm';
+
+            // Filter cards
+            cards.forEach(card => {
+                if (cat === 'all' || card.getAttribute('data-category') === cat) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Simulator View Switch
+        function switchSim(mode) {
+            const voiceView = document.getElementById('sim-voice-view');
+            const waView = document.getElementById('sim-whatsapp-view');
+            const voiceBtn = document.getElementById('sim-btn-voice');
+            const waBtn = document.getElementById('sim-btn-whatsapp');
+
+            if (mode === 'voice') {
+                voiceView.classList.remove('hidden');
+                waView.classList.add('hidden');
+                voiceBtn.className = 'flex-1 py-2.5 px-4 rounded-lg text-xs font-semibold transition-all bg-brand-blue text-white shadow-sm flex items-center justify-center gap-2';
+                waBtn.className = 'flex-1 py-2.5 px-4 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-white flex items-center justify-center gap-2';
+            } else {
+                voiceView.classList.add('hidden');
+                waView.classList.remove('hidden');
+                waBtn.className = 'flex-1 py-2.5 px-4 rounded-lg text-xs font-semibold transition-all bg-emerald-600 text-white shadow-sm flex items-center justify-center gap-2';
+                voiceBtn.className = 'flex-1 py-2.5 px-4 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-white flex items-center justify-center gap-2';
+            }
+        }
+
+        // Voice Simulator Steps
+        let voiceStep = 0;
+        const voiceScript = [
+            { role: 'Caller', text: "Hi, I have severe tooth pain on my lower left side. Do you have an opening today?" },
+            { role: 'AI Agent (0.2s)', text: "I'm sorry to hear that! Dr. Miller has an emergency slot open at 3:15 PM today. Would you like me to reserve that for you?" },
+            { role: 'Caller', text: "Yes please, 3:15 PM works great." },
+            { role: 'AI Agent (0.1s)', text: "Perfect. I've locked in 3:15 PM under your phone number. You'll receive a confirmation SMS in 5 seconds." }
+        ];
+
+        function playNextVoiceStep() {
+            if (voiceStep < voiceScript.length) {
+                const box = document.getElementById('voice-transcript');
+                const item = voiceScript[voiceStep];
+                const div = document.createElement('div');
+                
+                if (item.role === 'Caller') {
+                    div.className = "p-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 text-right font-mono";
+                    div.innerHTML = `<strong class="text-white">Caller:</strong> "${item.text}"`;
+                } else {
+                    div.className = "p-3 rounded-lg bg-slate-800 text-slate-200 font-mono";
+                    div.innerHTML = `<strong class="text-brand-blue">${item.role}:</strong> "${item.text}"`;
+                }
+
+                box.appendChild(div);
+                box.scrollTop = box.scrollHeight;
+                voiceStep++;
+            }
+        }
+
+        // WhatsApp Simulator Steps
+        let waStep = 0;
+        const waScript = [
+            { sender: 'user', text: "I want to drop 15 lbs and build core strength." },
+            { sender: 'bot', text: "Awesome goal! 🎯 Coach Marcus has 2 trial evaluation slots left this week:\n• Thursday 10 AM\n• Friday 4 PM\nWhich works best for you?" },
+            { sender: 'user', text: "Thursday 10 AM works!" },
+            { sender: 'bot', text: "You're booked! Here is the calendar invitation link: https://advaya.ai/ironpulse-slot" }
+        ];
+
+        function sendWaMessage() {
+            if (waStep < waScript.length) {
+                const chatBox = document.getElementById('wa-chat-box');
+                const msg = waScript[waStep];
+                const outerDiv = document.createElement('div');
+
+                if (msg.sender === 'user') {
+                    outerDiv.className = "flex gap-2 max-w-[85%] ml-auto justify-end";
+                    outerDiv.innerHTML = `<div class="p-3 rounded-2xl rounded-tr-none bg-emerald-600 text-white font-medium">${msg.text}</div>`;
+                } else {
+                    outerDiv.className = "flex gap-2 max-w-[85%]";
+                    outerDiv.innerHTML = `<div class="p-3 rounded-2xl rounded-tl-none bg-slate-800 text-slate-200 border border-slate-700 whitespace-pre-line">${msg.text}</div>`;
+                }
+
+                chatBox.appendChild(outerDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                waStep++;
+            }
+        }
+
+        // ROI Calculator Logic
+        function runCalculator() {
+            const leads = parseInt(document.getElementById('calc-leads').value);
+            const missedPct = parseInt(document.getElementById('calc-missed').value);
+            const value = parseInt(document.getElementById('calc-value').value);
+
+            document.getElementById('calc-leads-val').textContent = `${leads} leads`;
+            document.getElementById('calc-missed-val').textContent = `${missedPct}%`;
+            document.getElementById('calc-value-val').textContent = `$${value.toLocaleString()}`;
+
+            // Calculation formula
+            const monthlyMissed = leads * (missedPct / 100);
+            const monthlyRecoveredClients = monthlyMissed * 0.25; // 25% conversion
+            const annualRevenue = Math.round(monthlyRecoveredClients * value * 12);
+
+            document.getElementById('calc-annual-result').textContent = `$${annualRevenue.toLocaleString()}`;
+        }
+
+        // Modal Handlers
+        function openBookingModal() {
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            alert("✅ Architecture Call Requested! Our systems engineering team will confirm your slot via SMS.");
+            closeBookingModal();
+        }
+
+        // Initialize Calculator
+        window.onload = function() {
+            runCalculator();
+        }
+    </script>
+</body>
+</html>
