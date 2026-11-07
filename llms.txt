@@ -12,4 +12,4 @@
 Google Calendar, Dentrix, HighLevel, ServiceTitan, Jobber, Meta WhatsApp Business API, Google Business Profile API, custom APIs.
 
 ## Pages
-- [Home](https://advaya.ai/): overview, live demo, ROI calculator, FAQ.
+- [Home](https://advayaai.in/): overview, live demo, ROI calculator, FAQ.

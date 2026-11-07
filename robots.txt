@@ -17,4 +17,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://advaya.ai/sitemap.xml
+Sitemap: https://advayaai.in/sitemap.xml
