@@ -1,0 +1,15 @@
+# Advaya AI
+
+> Advaya AI is a systems engineering studio that builds production-grade AI voice receptionists, WhatsApp booking bots and Google review automation for local service businesses (dental clinics, fitness coaches, plumbing/HVAC/electrical trades, salons). Systems use deterministic guardrails (no double-booking or invented prices), sub-300ms voice latency and direct calendar/CRM sync.
+
+## Services
+- [Dental Clinic AI Front-Desk & Patient Scheduler](https://advaya-dental-solutions.vercel.app/dental/): 24/7 call answering, emergency triage, basic insurance checks, booking into Dentrix or Google Calendar.
+- WhatsApp Lead Qualifier & Onboarding Agent: replies to Meta/Instagram ad leads within 10 seconds, qualifies and books consultations.
+- 24/7 Emergency Dispatch & Job Quote Agent: captures after-hours trade calls, collects job photos via SMS, dispatches on-call staff.
+- Google Review Growth & Reputation Guardian: automated post-service review requests, private routing of negative feedback.
+
+## Integrations
+Google Calendar, Dentrix, HighLevel, ServiceTitan, Jobber, Meta WhatsApp Business API, Google Business Profile API, custom APIs.
+
+## Pages
+- [Home](https://advaya.ai/): overview, live demo, ROI calculator, FAQ.
