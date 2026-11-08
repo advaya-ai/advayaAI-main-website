@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advaya AI | AI Voice Receptionist & WhatsApp Booking Bots for Local Businesses</title>
-    <meta name="description" content="Advaya AI builds production-grade AI voice receptionists, WhatsApp booking bots and Google review automation for dental clinics, fitness coaches, plumbers and local service businesses. Answer every call 24/7 and never miss a lead.">
+    <title>Advaya AI | AI Receptionists & WhatsApp Booking Bots</title>
+    <meta name="description" content="AI voice receptionists, WhatsApp booking bots and Google review automation for dental clinics, gyms, trades and local businesses. Never miss a lead.">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Advaya AI">
     <meta name="theme-color" content="#0F172A">
@@ -16,7 +16,7 @@
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Advaya AI">
-    <meta property="og:title" content="Advaya AI | AI Voice Receptionist & WhatsApp Booking Bots for Local Businesses">
+    <meta property="og:title" content="Advaya AI | AI Receptionists & WhatsApp Booking Bots">
     <meta property="og:description" content="24/7 AI receptionists, WhatsApp lead bots and review automation for dental clinics, gyms, trades and local services. Built by cloud engineers, not no-code wrappers.">
     <meta property="og:url" content="https://advayaai.in/">
     <meta property="og:locale" content="en_US">
@@ -42,6 +42,10 @@
           "logo": { "@type": "ImageObject", "url": "https://advayaai.in/assets/logo-512.png", "width": 512, "height": 512 },
           "image": "https://advayaai.in/assets/og-image.jpg",
           "description": "Advaya AI is a systems engineering studio that builds production-grade AI voice receptionists, WhatsApp booking bots and reputation automation for local service businesses.",
+          "email": "support@advayaai.in",
+          "address": { "@type": "PostalAddress", "addressLocality": "Mangaluru", "addressRegion": "Karnataka", "addressCountry": "IN" },
+          "contactPoint": { "@type": "ContactPoint", "contactType": "customer support", "email": "support@advayaai.in", "availableLanguage": ["English"] },
+          "sameAs": ["https://www.instagram.com/advaya__ai/", "https://dental.advayaai.in/"],
           "knowsAbout": ["AI voice receptionist", "WhatsApp chatbot", "Appointment scheduling automation", "Dental practice automation", "Google review automation", "Lead qualification"]
         },
         {
@@ -94,47 +98,14 @@
       ]
     }
     </script>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS, prebuilt (see tailwind/tailwind.config.js for the rebuild command) -->
+    <link rel="stylesheet" href="/assets/tailwind.css">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        slate: {
-                            50: '#F8FAFC',
-                            100: '#F1F5F9',
-                            200: '#E2E8F0',
-                            300: '#CBD5E1',
-                            400: '#94A3B8',
-                            500: '#64748B',
-                            600: '#475569',
-                            700: '#334155',
-                            800: '#1E293B',
-                            900: '#0F172A',
-                            950: '#020617',
-                        },
-                        brand: {
-                            blue: '#2563EB',
-                            blueDark: '#1D4ED8',
-                            navy: '#0F172A',
-                            emerald: '#059669',
-                            emeraldLight: '#ECFDF5'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         body {
             background-color: #FFFFFF;
@@ -730,11 +701,18 @@
     <!-- FOOTER -->
     <footer class="bg-white border-t border-slate-200 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-xs">
-            <div class="flex items-center gap-3">
-                <img src="assets/logo.png" alt="Advaya AI" width="41" height="28" class="h-7 w-auto" loading="lazy">
-                <span class="text-sm font-bold text-slate-900">Advaya AI Studio</span>
+            <div class="flex flex-col items-center md:items-start gap-2">
+                <div class="flex items-center gap-3">
+                    <img src="assets/logo.png" alt="Advaya AI" width="41" height="28" class="h-7 w-auto" loading="lazy">
+                    <span class="text-sm font-bold text-slate-900">Advaya AI</span>
+                </div>
+                <address class="not-italic text-center md:text-left leading-relaxed">
+                    Mangaluru, Karnataka, India<br>
+                    <a href="mailto:support@advayaai.in" class="text-slate-700 hover:text-slate-900 font-medium">support@advayaai.in</a>
+                    · <a href="https://www.instagram.com/advaya__ai/" target="_blank" rel="noopener" class="text-slate-700 hover:text-slate-900 font-medium"><i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram</a>
+                </address>
             </div>
-            
+
             <p>© 2026 Advaya AI. High-Reliability Systems Engineering for Service Businesses.</p>
 
             <div class="flex flex-wrap justify-center gap-6 font-medium text-slate-600">
