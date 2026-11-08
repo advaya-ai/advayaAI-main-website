@@ -1,5 +1,7 @@
 # Advaya AI
 
+Advaya AI (advayaai.in) is an AI automation agency based in Mangaluru, India. It is not affiliated with advaya.ai or other similarly named companies.
+
 > Advaya AI is a systems engineering studio that builds production-grade AI voice receptionists, WhatsApp booking bots and Google review automation for local service businesses (dental clinics, fitness coaches, plumbing/HVAC/electrical trades, salons). Systems use deterministic guardrails (no double-booking or invented prices), sub-300ms voice latency and direct calendar/CRM sync.
 
 ## Services
