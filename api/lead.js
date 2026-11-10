@@ -12,7 +12,6 @@ const BASE_ID = process.env.AIRTABLE_BASE_ID || "appxVgFc2OECiVDXz";
 const TABLE_ID = process.env.AIRTABLE_TABLE_ID || "tblkLoM28KLHZdc4V";
 
 // Airtable column names. They must match the table exactly (case and punctuation).
-// The table has no column for the demo slot, so it is written into Notes.
 const FIELDS = {
   name: "Full Name",
   email: "Email",
@@ -21,7 +20,7 @@ const FIELDS = {
   notes: "Notes",
 };
 
-const LIMITS = { name: 120, email: 160, phone: 40, industry: 80, slot: 60, notes: 2000 };
+const LIMITS = { name: 120, email: 160, phone: 40, industry: 80, notes: 2000 };
 
 function clean(value, max) {
   if (typeof value !== "string") return "";
@@ -53,7 +52,6 @@ module.exports = async function handler(req, res) {
     email: clean(body.email, LIMITS.email).toLowerCase(),
     phone: clean(body.phone, LIMITS.phone),
     industry: clean(body.industry, LIMITS.industry),
-    slot: clean(body.slot, LIMITS.slot),
     notes: clean(body.notes, LIMITS.notes),
   };
 
@@ -79,7 +77,6 @@ module.exports = async function handler(req, res) {
 
   const noteParts = [];
   if (data.notes) noteParts.push(data.notes);
-  if (data.slot) noteParts.push("Preferred demo slot: " + data.slot);
   noteParts.push("Source: advayaai.in - Book Architecture Call");
 
   const fields = {
