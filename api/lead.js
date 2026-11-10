@@ -12,16 +12,16 @@ const BASE_ID = process.env.AIRTABLE_BASE_ID || "appxVgFc2OECiVDXz";
 const TABLE_ID = process.env.AIRTABLE_TABLE_ID || "tblkLoM28KLHZdc4V";
 
 // Airtable column names. They must match the table exactly (case and punctuation).
+// The table has no column for the demo slot, so it is written into Notes.
 const FIELDS = {
-  name: "Name",
-  phone: "Phone",
-  industry: "Industry",
-  slot: "Preferred demo slot",
-  source: "Source",
+  name: "Full Name",
+  email: "Email",
+  phone: "Phone Number",
+  industry: "Industry",   // single select; typecast adds any new option automatically
+  notes: "Notes",
 };
 
-const SOURCE = "advayaai.in - Book Architecture Call";
-const LIMITS = { name: 120, phone: 40, industry: 80, slot: 60 };
+const LIMITS = { name: 120, email: 160, phone: 40, industry: 80, slot: 60, notes: 2000 };
 
 function clean(value, max) {
   if (typeof value !== "string") return "";
@@ -50,14 +50,19 @@ module.exports = async function handler(req, res) {
 
   const data = {
     name: clean(body.name, LIMITS.name),
+    email: clean(body.email, LIMITS.email).toLowerCase(),
     phone: clean(body.phone, LIMITS.phone),
     industry: clean(body.industry, LIMITS.industry),
     slot: clean(body.slot, LIMITS.slot),
+    notes: clean(body.notes, LIMITS.notes),
   };
 
-  const missing = ["name", "phone"].filter(k => !data[k]);
+  const missing = ["name", "email", "phone"].filter(k => !data[k]);
   if (missing.length) {
-    return res.status(400).json({ ok: false, error: "Please fill in your name and phone number", fields: missing });
+    return res.status(400).json({ ok: false, error: "Please fill in your name, email and phone number", fields: missing });
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) {
+    return res.status(400).json({ ok: false, error: "Please enter a valid email address", fields: ["email"] });
   }
   if (!/^[+()\d\s.-]{6,40}$/.test(data.phone)) {
     return res.status(400).json({ ok: false, error: "Please enter a valid phone number", fields: ["phone"] });
@@ -69,13 +74,21 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ ok: false, error: "Form is not configured" });
   }
 
+  // Airtable phone fields accept text; keep only digits and a leading + so it matches the column's format.
+  const phone = (data.phone.trim().startsWith("+") ? "+" : "") + data.phone.replace(/\D/g, "");
+
+  const noteParts = [];
+  if (data.notes) noteParts.push(data.notes);
+  if (data.slot) noteParts.push("Preferred demo slot: " + data.slot);
+  noteParts.push("Source: advayaai.in - Book Architecture Call");
+
   const fields = {
     [FIELDS.name]: data.name,
-    [FIELDS.phone]: data.phone,
-    [FIELDS.source]: SOURCE,
+    [FIELDS.email]: data.email,
+    [FIELDS.phone]: phone,
+    [FIELDS.notes]: noteParts.join("\n"),
   };
   if (data.industry) fields[FIELDS.industry] = data.industry;
-  if (data.slot) fields[FIELDS.slot] = data.slot;
 
   try {
     const r = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}`, {
