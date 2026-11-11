@@ -901,11 +901,37 @@
                     <input id="b-email" name="email" type="email" autocomplete="email" maxlength="160" required placeholder="you@yourclinic.com" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-brand-blue">
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label for="b-phone" class="block text-xs font-semibold text-slate-700 mb-1">Phone / WhatsApp</label>
-                        <input id="b-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" required placeholder="+1 (555) 000-0000" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-brand-blue">
+                <div>
+                    <label for="b-phone" class="block text-xs font-semibold text-slate-700 mb-1">Phone / WhatsApp</label>
+                    <div class="flex gap-2">
+                        <select id="b-country" name="country_code" aria-label="Country code" autocomplete="tel-country-code" class="shrink-0 w-28 px-2.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-800 text-sm focus:outline-none focus:border-brand-blue">
+                            <option value="+91" selected>IN +91</option>
+                            <option value="+1">US/CA +1</option>
+                            <option value="+44">UK +44</option>
+                            <option value="+971">AE +971</option>
+                            <option value="+61">AU +61</option>
+                            <option value="+65">SG +65</option>
+                            <option value="+966">SA +966</option>
+                            <option value="+974">QA +974</option>
+                            <option value="+968">OM +968</option>
+                            <option value="+965">KW +965</option>
+                            <option value="+973">BH +973</option>
+                            <option value="+64">NZ +64</option>
+                            <option value="+353">IE +353</option>
+                            <option value="+49">DE +49</option>
+                            <option value="+33">FR +33</option>
+                            <option value="+31">NL +31</option>
+                            <option value="+27">ZA +27</option>
+                            <option value="+60">MY +60</option>
+                            <option value="+977">NP +977</option>
+                            <option value="+94">LK +94</option>
+                            <option value="+880">BD +880</option>
+                        </select>
+                        <input id="b-phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" maxlength="40" required placeholder="98765 43210" class="min-w-0 flex-1 px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-brand-blue">
                     </div>
+                </div>
+
+                <div>
                     <div>
                         <label for="b-industry" class="block text-xs font-semibold text-slate-700 mb-1">Industry</label>
                         <select id="b-industry" name="industry" class="w-full px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-300 text-slate-800 text-sm focus:outline-none focus:border-brand-blue">
@@ -1117,9 +1143,13 @@
             e.preventDefault();
             const form = e.target;
             const d = new FormData(form);
+            const countryCode = d.get('country_code') || '';
+            const rawPhone = (d.get('phone') || '').trim();
+            // Number typed with its own +code wins; otherwise prefix the chosen code (drop trunk 0s).
+            const fullPhone = rawPhone.startsWith('+') ? rawPhone : (countryCode + ' ' + rawPhone.replace(/^0+/, '')).trim();
             const payload = {
-                name: d.get('name') || '', email: d.get('email') || '', phone: d.get('phone') || '', industry: d.get('industry') || '',
-                notes: d.get('notes') || '', website: d.get('website') || ''
+                name: d.get('name') || '', email: d.get('email') || '', phone: rawPhone, country_code: countryCode,
+                industry: d.get('industry') || '', notes: d.get('notes') || '', website: d.get('website') || ''
             };
             const btn = form.querySelector('button[type="submit"]');
             btn.disabled = true;
@@ -1135,7 +1165,7 @@
                     form.reset();
                     document.getElementById('booking-status').className = 'hidden';
                     closeBookingModal();
-                    openSuccessModal(payload.name, payload.phone);
+                    openSuccessModal(payload.name, fullPhone);
                 } else if (r.status === 400) {
                     setBookingStatus(out.error || 'Please check your details and try again.', 'error');
                 } else {
@@ -1143,7 +1173,7 @@
                 }
             } catch (err) {
                 setBookingStatus('We could not save your request online, so your email app will open with the details filled in. If it does not, write to ' + CONTACT_EMAIL + '.', 'error');
-                const lines = ['Architecture call request', 'Name: ' + payload.name, 'Email: ' + payload.email, 'Phone / WhatsApp: ' + payload.phone,
+                const lines = ['Architecture call request', 'Name: ' + payload.name, 'Email: ' + payload.email, 'Phone / WhatsApp: ' + fullPhone,
                                'Industry: ' + payload.industry, 'Goal: ' + (payload.notes || '-')];
                 window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('Architecture call request: ' + payload.name)
                     + '&body=' + encodeURIComponent(lines.join('\n'));

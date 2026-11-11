@@ -51,6 +51,7 @@ module.exports = async function handler(req, res) {
     name: clean(body.name, LIMITS.name),
     email: clean(body.email, LIMITS.email).toLowerCase(),
     phone: clean(body.phone, LIMITS.phone),
+    countryCode: clean(body.country_code, 6),
     industry: clean(body.industry, LIMITS.industry),
     notes: clean(body.notes, LIMITS.notes),
   };
@@ -72,8 +73,24 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ ok: false, error: "Form is not configured" });
   }
 
-  // Airtable phone fields accept text; keep only digits and a leading + so it matches the column's format.
-  const phone = (data.phone.trim().startsWith("+") ? "+" : "") + data.phone.replace(/\D/g, "");
+  // Save the number in E.164 (+<country code><number>) so the voice agent can dial it.
+  // A number typed with its own +code wins; otherwise prefix the code chosen in the dropdown.
+  const digits = data.phone.replace(/\D/g, "");
+  let phone;
+  if (data.phone.startsWith("+")) {
+    phone = "+" + digits;
+  } else if (/^\+\d{1,4}$/.test(data.countryCode)) {
+    const ccDigits = data.countryCode.slice(1);
+    let national = digits.replace(/^0+/, ""); // drop trunk prefix, e.g. 098... -> 98...
+    // Visitor typed the code again without "+" (e.g. 91 98765 43210): don't double it.
+    if (national.startsWith(ccDigits) && national.length > 10) national = national.slice(ccDigits.length);
+    phone = data.countryCode + national;
+  } else {
+    phone = digits; // old form without the dropdown
+  }
+  if (phone.replace(/\D/g, "").length < 8) {
+    return res.status(400).json({ ok: false, error: "Please enter a valid phone number", fields: ["phone"] });
+  }
 
   const noteParts = [];
   if (data.notes) noteParts.push(data.notes);
